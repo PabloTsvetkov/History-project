@@ -183,39 +183,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function sendDataToGoogleSheet(firstName, secondName, sex, speciality, correctAnswers) {
-    // URL вашего Google Apps Script
-    var url = "https://script.google.com/macros/s/AKfycbyDl0Nx8b6tciYDX5AVMjEi1yewT-99S63en0FKmQ1ddsZYGfgUSRJsX4F6oHCSp47W/exec";
-
-    // Данные для отправки
     var data = {
-        variable1: firstName,
-        variable2: secondName,
-        variable3: sex,
-        variable4: speciality,
-        variable5: correctAnswers
+        field1: firstName,
+        field2: secondName,
+        field3: sex,
+        field4: speciality,
+        field5: correctAnswers
     };
 
-    // Опции запроса
-    var options = {
-        method: "POST",
+    fetch('https://script.google.com/macros/s/AKfycbwhRPxkIa1e1nhxs0lDb7J2jBGxAKrJ7O-NTbF8MxuVzoR8MzmQ_M7lYD9hrbRgfOXGyA/exec', {
+        method: 'POST',
+        mode: 'no-cors', // Обратите внимание на этот параметр
         headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-    };
-
-    // Отправка запроса
-    fetch(url, options)
-        .then(function (response) {
-            if (!response.ok) {
-                throw new Error("Произошла ошибка: " + response.status);
-            }
-            return response.text();
-        })
-        .then(function (data) {
-            console.log("Данные успешно отправлены в Google Таблицу:", data);
-        })
-        .catch(function (error) {
-            console.error("Ошибка при отправке данных в Google Таблицу:", error);
+    })
+        .catch(error => {
+            console.error('Ошибка:', error);
         });
 }
