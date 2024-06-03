@@ -49,12 +49,12 @@ main {
 
 .testBlock {
     justify-content: center;
-    padding-bottom: 50px;
+    padding-bottom: 150px;
     margin-left: auto;
     margin-right: auto;
     position: relative;
     min-height: 60%;
-    height: fit-content;
+    height: calc(fit-content + 50px);
 }
 
 #description-container {
@@ -63,4 +63,24 @@ main {
     position: absolute;
     width: 70%;
     margin-top: 50px;
+}
+
+.inputData {
+    width: 70%;
+    height: 24px;
+
+    margin-bottom: 10px;
+    padding-left: 10px;
+
+    font-size: 16px;
+
+    border-radius: 12px;
+    border-color: #927052;
+}
+
+.inputDataLabel {
+    display: block;
+}
+.inputDataLabel:first-of-type {
+    margin-top: 20px;
 }
