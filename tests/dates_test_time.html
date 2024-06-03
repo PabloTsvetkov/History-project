@@ -49,6 +49,30 @@
         <div class="testBlock">
             <div id="description-container">
                 <p>Эта тестовая работа состоит из 20 вопросов. У вас есть 20 минут на её выполнение.</p>
+                <p>Перед началом опроса мы просим Вас заполнить данные о себе</p>
+
+                <form>
+                    <div>
+                        <label for="secondName" class="inputDataLabel">Фамилия:</label>
+                        <input type="text" id="secondName" name="secondName" required class="inputData">
+                    </div>
+                    <div>
+                        <label for="firstName" class="inputDataLabel">Имя:</label>
+                        <input type="text" id="firstName" name="firstName" required class="inputData">
+                    </div>
+                    <div>
+                        <label for="sex" class="inputDataLabel">Пол:</label>
+                        <select id="sex" name="sex" required class="inputData">
+                            <option></option>
+                            <option value="male">Мужской</option>
+                            <option value="female">Женский</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="speciality" class="inputDataLabel">Направление:</label>
+                        <input type="text" id="speciality" name="speciality" required class="inputData">
+                    </div>
+                </form>
                 <button id="start-button">Начать тест</button>
             </div>
             <div class="timer" id="timer-container">20:00</div>

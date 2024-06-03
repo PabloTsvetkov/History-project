@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const questionsURL = "/static/tests_jsons/dates_test.json";
+    const questionsURL = "../static/tests_jsons/dates_test.json";
     const totalTimeInMinutes = 20;
     const totalQuestions = 20;
 
@@ -8,8 +8,31 @@ document.addEventListener('DOMContentLoaded', () => {
     let incorrectAnswers = [];
 
     let countdown;
+    let firstName = undefined;
+    let secondName = undefined;
+    let speciality = undefined;
+    let sex = undefined;
 
-    document.getElementById('start-button').addEventListener('click', startTest);
+
+    // document.getElementById('start-button').addEventListener('click', startTest);
+    document.getElementById('start-button').addEventListener('click', () => {
+        firstName = document.getElementById("firstName").value;
+        secondName = document.getElementById("secondName").value;
+        sex = document.getElementById("sex").value;
+        speciality = document.getElementById("speciality").value;
+        if (firstName === "" || secondName === "" || sex === "" || speciality === "") {
+            const error = document.createElement('p');
+            error.textContent = "Заполните все поля";
+            error.style.fontWeight = "bold";
+            error.style.color = "red";
+            error.style.fontSize = "1.2em";
+            error.style.marginTop = "50px";
+            document.getElementById('description-container').appendChild(error);
+        }
+        else {
+            startTest();
+        }
+    });
 
     function startTest() {
         document.getElementById('description-container').style.display = 'none';
@@ -114,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function endTest() {
+        sendDataToGoogleSheet(firstName, secondName, sex, speciality, correctAnswers);
         clearInterval(countdown);
         document.getElementById('question-container').style.display = 'none';
         showFinalResults();
@@ -157,3 +181,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+function sendDataToGoogleSheet(firstName, secondName, sex, speciality, correctAnswers) {
+    // URL вашего Google Apps Script
+    var url = "https://script.google.com/macros/s/AKfycbyDl0Nx8b6tciYDX5AVMjEi1yewT-99S63en0FKmQ1ddsZYGfgUSRJsX4F6oHCSp47W/exec";
+
+    // Данные для отправки
+    var data = {
+        variable1: firstName,
+        variable2: secondName,
+        variable3: sex,
+        variable4: speciality,
+        variable5: correctAnswers
+    };
+
+    // Опции запроса
+    var options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    };
+
+    // Отправка запроса
+    fetch(url, options)
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error("Произошла ошибка: " + response.status);
+            }
+            return response.text();
+        })
+        .then(function (data) {
+            console.log("Данные успешно отправлены в Google Таблицу:", data);
+        })
+        .catch(function (error) {
+            console.error("Ошибка при отправке данных в Google Таблицу:", error);
+        });
+}
