@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentQuestionIndex = 0;
     let correctAnswers = 0;
     let incorrectAnswers = [];
+    let helpUsedIndArr = [];
+    let QuestionNow = 0;
 
     let countdown;
     let firstName = undefined;
@@ -69,7 +71,21 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const currentQuestion = questions[currentQuestionIndex];
+        // const currentQuestion = questions[currentQuestionIndex];
+        // const questionContainer = document.getElementById('question-container');
+        // questionContainer.innerHTML = '';
+        let helpUnusedIndArr = [];
+        for (let i = 0; i < questions.length; i++) {
+            if (helpUsedIndArr.includes(i, 0) === false) {
+                helpUnusedIndArr.push(i);
+            }
+        }
+
+        let rnd = Math.floor(Math.random() * helpUnusedIndArr.length);
+        helpUsedIndArr.push(helpUnusedIndArr[rnd]);
+        QuestionNow = helpUnusedIndArr[rnd];
+
+        const currentQuestion = questions[QuestionNow];
         const questionContainer = document.getElementById('question-container');
         questionContainer.innerHTML = '';
 
